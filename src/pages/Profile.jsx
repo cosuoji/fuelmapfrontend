@@ -49,20 +49,23 @@ export default function Profile() {
       {/* 🏅 Badges Section */}
       <div className="mt-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-2">Badges</h3>
-        {profile.badges?.length ? (
-          <ul className="space-y-1 list-disc list-inside">
-            {profile.badges.map((badge) => (
-              <li key={badge.key}>
-                <span className="font-medium">{badge.name}</span>{" "}
-                <span className="text-gray-500 text-sm">
-                  ({new Date(badge.awardedAt).toLocaleDateString()})
-                </span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-500 text-sm">No badges yet</p>
-        )}
+       {profile.badges && profile.badges.length > 0 ? (
+  <div className="mt-4">
+    <strong>Badges:</strong>
+    <ul className="list-disc ml-6 mt-2 text-gray-700">
+      {profile.badges.map((badge) => (
+        <li key={badge.key}>
+          {badge.name} — <span className="text-sm text-gray-500">
+            Awarded {new Date(badge.awardedAt).toLocaleDateString()}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+) : (
+  <p className="mt-2 text-gray-500">No badges yet</p>
+)}
+
       </div>
 
       {/* 📈 Reputation History */}

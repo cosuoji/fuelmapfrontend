@@ -15,16 +15,18 @@ export default function Navbar() {
     navigate("/login");
   };
 
-  const renderBadge = (badge) => {
-    switch (badge) {
-      case "Verified":
-        return "✅ Verified";
-      case "Top Contributor":
-        return "⭐ Top Contributor";
-      default:
-        return badge;
-    }
-  };
+const renderBadge = (badge) => {
+  const badgeName = typeof badge === "string" ? badge : badge.name;
+
+  switch (badgeName) {
+    case "Verified":
+      return "✅ Verified";
+    case "Top Contributor":
+      return "⭐ Top Contributor";
+    default:
+      return badgeName || "Badge";
+  }
+};
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md p-4 flex justify-between items-center">
@@ -62,14 +64,15 @@ export default function Navbar() {
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
             >
               <span className="font-medium">{user.username}</span>
-              {user.badges?.map((badge, i) => (
-                <span
-                  key={i}
-                  className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-700"
-                >
-                  {renderBadge(badge)}
-                </span>
-              ))}
+          {user.badges?.map((badge, i) => (
+              <span
+                key={badge.key || i}
+                className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-700"
+              >
+                {renderBadge(badge.name)}
+              </span>
+            ))}
+
             </Link>
 
             {user.isAdmin && (

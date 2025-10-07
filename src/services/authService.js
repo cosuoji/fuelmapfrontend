@@ -29,34 +29,22 @@ export const registerUser = async (data) => {
   return res.data;
 };
 
+// getUsers
 export const getUsers = async () => {
   const { data } = await API.get("/admin/users");
   return data;
 };
 
+// addBadge
 export const addBadge = async (userId, badge) => {
-  const { data } = await API.post(`/admin/users/${userId}/badges`, { badge });
+  const { data } = await API.post(`/admin/users/${userId}/badges`, badge);
   return data;
 };
 
-export const removeBadge = async (userId, badge) => {
-  const { data } = await API.delete(`/admin/users/${userId}/badges`, { data: { badge } });
+// removeBadge
+export const removeBadge = async (userId, badgeKey) => {
+  const { data } = await API.delete(`/admin/users/${userId}/badges/${badgeKey}`);
   return data;
 };
 
 
-// Stations
-export const getStations = async () => {
-  const res = await API.get("/stations");
-  return res.data;
-};
-
-export const addStation = async (station) => {
-  const res = await API.post("/stations", station);
-  return res.data;
-};
-
-export const deleteStation = async (id) => {
-  const res = await API.delete(`/stations/${id}`);
-  return res.data;
-};

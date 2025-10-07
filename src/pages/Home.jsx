@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSEO } from "../components/useSEO";
+
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -8,6 +10,13 @@ export default function Home() {
     const savedUser = localStorage.getItem("user");
     if (savedUser) setUser(JSON.parse(savedUser));
   }, []);
+
+   useSEO({
+    title: "Homepage - Fuel Price Directory",
+    description: "Compare fuel prices and find the nearest stations in Nigeria.",
+    keywords: "fuel stations, petrol price, diesel, nearest station, Nigeria fuel",
+    image: "",
+  });
 
   return (
     <div className="bg-gray-50 min-h-screen">

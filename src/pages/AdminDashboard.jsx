@@ -6,21 +6,21 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("users");
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen pt-10">
       {/* Sidebar */}
       <aside className="w-64 bg-gray-800 text-white flex flex-col">
         <h2 className="text-2xl font-bold p-4 border-b border-gray-700">
           Admin Panel
         </h2>
         <nav className="flex flex-col flex-grow p-4 space-y-2">
-          <button
+          {/* <button
             className={`text-left px-3 py-2 rounded ${
               activeTab === "users" ? "bg-gray-700" : "hover:bg-gray-700"
             }`}
             onClick={() => setActiveTab("users")}
           >
             👤 Users
-          </button>
+          </button> */}
           <button
             className={`text-left px-3 py-2 rounded ${
               activeTab === "stations" ? "bg-gray-700" : "hover:bg-gray-700"
@@ -42,7 +42,7 @@ export default function AdminDashboard() {
 
       {/* Main Content */}
       <main className="flex-grow p-6 bg-gray-50">
-        {activeTab === "users" && <UsersTable />}
+        {/* {activeTab === "users" && <UsersTable />} */}
         {activeTab === "stations" && <StationsTable />}
         {activeTab === "badges" && (
           <div>

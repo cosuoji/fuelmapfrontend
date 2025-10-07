@@ -19,7 +19,8 @@ export default function UsersTable() {
 
   const handleAddBadge = async (userId) => {
     try {
-      await addBadge(userId, "Verified ✅"); // default for now
+      // Give a default badge for now
+      await addBadge(userId, { key: "verified", name: "Verified ✅" });
       toast.success("Badge added!");
       fetchUsers();
     } catch (err) {
@@ -27,9 +28,9 @@ export default function UsersTable() {
     }
   };
 
-  const handleRemoveBadge = async (userId, badge) => {
+  const handleRemoveBadge = async (userId, badgeKey) => {
     try {
-      await removeBadge(userId, badge);
+      await removeBadge(userId, badgeKey);
       toast.success("Badge removed!");
       fetchUsers();
     } catch (err) {
@@ -60,20 +61,23 @@ export default function UsersTable() {
             <tr key={u._id} className="hover:bg-gray-50">
               <td className="p-2 border">{u.email}</td>
               <td className="p-2 border">{u.isAdmin ? "Admin" : "User"}</td>
+
+              {/* ✅ Fix: Safely render badge name */}
               <td className="p-2 border">
                 {u.badges?.length > 0 ? (
                   u.badges.map((b, i) => (
                     <span
-                      key={i}
+                      key={b.key || i}
                       className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded mr-1"
                     >
-                      {b}
+                      {b.name || b.key}
                     </span>
                   ))
                 ) : (
                   <span className="text-gray-400 text-sm">No badges</span>
                 )}
               </td>
+
               <td className="p-2 border">
                 <button
                   onClick={() => handleAddBadge(u._id)}
@@ -81,13 +85,15 @@ export default function UsersTable() {
                 >
                   + Badge
                 </button>
+
+                {/* ✅ Fix: Remove badges using badge.key */}
                 {u.badges?.map((b, i) => (
                   <button
-                    key={i}
-                    onClick={() => handleRemoveBadge(u._id, b)}
+                    key={b.key || i}
+                    onClick={() => handleRemoveBadge(u._id, b.key)}
                     className="bg-red-500 text-white px-2 py-1 rounded mr-2 hover:bg-red-600"
                   >
-                    Remove {b}
+                    Remove {b.name || b.key}
                   </button>
                 ))}
               </td>

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { loginUser, getProfile } from "../services/authService";
+import { loginUser } from "../services/authService";
 import { useAuth } from "../store/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // ✅ import Link
 import PasswordInput from "../components/PasswordInput";
 
 export default function Login() {
@@ -10,18 +10,17 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-    useEffect(() => {
+  useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
-      navigate("/"); // redirect to home
+      navigate("/"); // redirect to home if already logged in
     }
   }, [navigate]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { token, user } = await loginUser(form); // username + password
+      const { token, user } = await loginUser(form);
       login(user, token);
       toast.success("Login successful!");
       navigate("/profile");
@@ -30,11 +29,10 @@ export default function Login() {
     }
   };
 
-  
-
   return (
-    <div className="max-w-md mx-auto  bg-white p-6 shadow rounded">
+    <div className="max-w-md mx-auto bg-white p-6 shadow rounded">
       <h2 className="text-xl font-bold mb-4">Login</h2>
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
@@ -44,7 +42,6 @@ export default function Login() {
           onChange={(e) => setForm({ ...form, username: e.target.value })}
         />
 
-        {/* Password with toggle */}
         <PasswordInput
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
@@ -58,6 +55,14 @@ export default function Login() {
           Login
         </button>
       </form>
+
+      {/* 👇 Add this section below the form */}
+      <p className="text-center text-sm text-gray-600 mt-4">
+        Don’t have an account?{" "}
+        <Link to="/signup" className="text-blue-600 hover:underline font-medium">
+          Sign Up
+        </Link>
+      </p>
     </div>
   );
 }

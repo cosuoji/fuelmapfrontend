@@ -14,6 +14,8 @@ import AdminRoute from "./components/AdminRoute";
 import AppFooter from "./components/Footer";
 import Feedback from "./pages/Feedback";
 import OfflineBanner from "./components/OfflineBanner";
+import AddToHomeScreenPrompt from "./components/AddToHomeScreenPrompt";
+
 
   const savedUser = localStorage.getItem("user");
 if (savedUser) useAuth.setState({ user: JSON.parse(savedUser) });
@@ -65,6 +67,7 @@ export default function App() {
         
       </div>
       <OfflineBanner />
+      <AddToHomeScreenPrompt />
       <AppFooter />
     </div>
   );

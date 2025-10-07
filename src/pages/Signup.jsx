@@ -1,19 +1,24 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { registerUser, getProfile } from "../services/authService";
+import { useNavigate, Link } from "react-router-dom"; // ✅ import Link
+import { registerUser } from "../services/authService";
 import { useAuth } from "../store/useAuth";
 import PasswordInput from "../components/PasswordInput";
 
 export default function Signup() {
-  const [form, setForm] = useState({ username: "", email: "", password: "", confirmPassword: "" });
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const { login } = useAuth();
   const navigate = useNavigate();
 
-    useEffect(() => {
+  useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
-      navigate("/"); // redirect to home
+      navigate("/"); // redirect to home if already logged in
     }
   }, [navigate]);
 
@@ -64,14 +69,12 @@ export default function Signup() {
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
 
-        {/* Password with toggle */}
         <PasswordInput
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           placeholder="Password"
         />
 
-        {/* Confirm Password with toggle */}
         <PasswordInput
           value={form.confirmPassword}
           onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
@@ -85,6 +88,14 @@ export default function Signup() {
           Sign Up
         </button>
       </form>
+
+      {/* 👇 Added login prompt */}
+      <p className="text-center text-sm text-gray-600 mt-4">
+        Already have an account?{" "}
+        <Link to="/login" className="text-blue-600 hover:underline font-medium">
+          Log In
+        </Link>
+      </p>
     </div>
   );
 }

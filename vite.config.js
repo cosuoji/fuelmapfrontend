@@ -11,7 +11,7 @@ export default defineConfig({
       includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"],
       manifest: {
         name: "Fuel Price Directory",
-        short_name: "FuelWatch",
+        short_name: "Fuel Price Directory",
         description: "Track and update fuel prices in your area",
         theme_color: "#2563eb",
         icons: [
@@ -37,7 +37,7 @@ export default defineConfig({
               request.destination === "image",
             handler: "CacheFirst",
             options: {
-              cacheName: "fuelwatch-assets",
+              cacheName: "fuelpricedirectory-assets",
               expiration: { maxEntries: 60, maxAgeSeconds: 30 * 24 * 60 * 60 }
             }
           }
